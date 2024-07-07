@@ -1,28 +1,49 @@
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render, HttpResponse, redirect
 
 # Create your views here.
 
 def index(request):
-    return HttpResponse("Hello this is an index page")
+    context = {'name':"parth", "place":"moradabad"}
+    return  render(request, "index.html", context)
 
 
-def removepunc(request):
-    return HttpResponse("Hello this is removepunc page")
+def analyze(request):
+    # get the text
+    text = (request.GET.get("textarea"))
+    removepunc = (request.GET.get("removepunc", "off"))
+    print(removepunc)
+    print(text)
+
+    if removepunc == "on":
+    
+        punctuations = '''!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~'''
+        analyzed = ""
+        for char in text:
+            if char not in punctuations:
+                analyzed = analyzed+char
 
 
-def capitalizefirst(request):
-    return HttpResponse("Hello this is an capitalize page")
+        params = {'purpose':'removed punctuations', "analysed_text":analyzed}
+
+        # analyze the text
+        return render(request, "analyze.html", params)
+    else:
+        return HttpResponse("Error")
 
 
-def newlineremove(request):
-    return HttpResponse("Hello this is newlineremove page")
+# def capitalizefirst(request):
+#     return HttpResponse("Hello this is an capitalize page")
 
 
-def spaceremove(request):
-    return HttpResponse("Hello this is spaceremove page")
+# def newlineremove(request):
+#     return HttpResponse("Hello this is newlineremove page")
 
 
-def charcount(request):
-    return HttpResponse("Hello this is an charactercount page")
+# def spaceremove(request):
+#     return HttpResponse("Hello this is spaceremove page")
+
+
+# def charcount(request):
+#     return HttpResponse("Hello this is an charactercount page")
 
 
