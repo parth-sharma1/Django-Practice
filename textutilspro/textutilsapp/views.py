@@ -9,13 +9,14 @@ def index(request):
 
 def analyze(request):
     # get the text
-    text = (request.GET.get("textarea"))
+    text = (request.GET.get("text"))
 
     # check the checkboxes values
     removepunc = (request.GET.get("removepunc", "off"))
     fullcaps = (request.GET.get("fullcaps", "off"))
     newlineremover = (request.GET.get("newlineremover", "off"))
     extraspaceremover = (request.GET.get("extraspaceremover", "off"))
+    charcount = (request.GET.get("charcount", "off"))
 
    
 
@@ -70,10 +71,24 @@ def analyze(request):
             else:
                 analyzed+=char
 
-        params = {'purpose':'Extraspaceremover', "analysed_text":analyzed}
+        params = {'purpose':'Extra Space Remover', "analysed_text":analyzed}
         return render(request, "analyze.html", params)
 
+    # checking charcount condition
+    elif (charcount=="on"):
 
+        analyzed = ""
+        count = 0
+        for char in text:
+            if char != " ":
+                analyzed+=char
+                count+=1
+        
+
+        params = {'purpose':'character count', "analysed_text":analyzed}
+        return HttpResponse (f"this text has {count} character")
+        return render(request, "analyze.html", params)
+        
     else:
         return HttpResponse("Error")
 
