@@ -14,6 +14,7 @@ def analyze(request):
     # check the checkboxes values
     removepunc = (request.POST.get("removepunc", "off"))
     fullcaps = (request.POST.get("fullcaps", "off"))
+    lowercase = (request.POST.get("lowercase", "off"))
     newlineremover = (request.POST.get("newlineremover", "off"))
     extraspaceremover = (request.POST.get("extraspaceremover", "off"))
     charcount = (request.POST.get("charcount", "off"))
@@ -48,6 +49,15 @@ def analyze(request):
         # analyze the text
         return render(request, "analyze.html", params)
     
+
+    # checking the lowercase checkbox
+    elif (lowercase=="on"):
+        analyzed =""
+        for char in text:
+            analyzed+=char.lower()
+
+        params = {'purpose': 'changed to lowercase', "analysed_text": analyzed}
+        return render(request, "analyze.html", params)
 
 
     # checking the new Line remover checkbox
