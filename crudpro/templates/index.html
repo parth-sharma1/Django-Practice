@@ -81,8 +81,8 @@
                 <td>{{d.email}}</td>
                 <td>{{d.age}}</td>
                 <td>{{d.gender}}</td>
-                <td><button type="button" class="btn btn-primary">Edit</button></td>
-                <td><button type="button" class="btn btn-danger">Delete</button></td>
+                <td><a type="button" href="/update/{{d.id}}" class="btn btn-primary">Edit</a></td>      <!-- here we should take {{d.id}} for update becoz this is a primary key-->
+                <td><a type="button" href="/delete/{{d.id}}" class="btn btn-danger">Delete</a></td>
               </tr>
               {% endfor %}
                 
