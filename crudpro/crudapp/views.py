@@ -1,8 +1,15 @@
 from django.shortcuts import render
+from .models import Student
+
+# admin-----> 1234
 
 # Create your views here.
 def index(request):
-    return render(request, "index.html")
+    data = Student.objects.all()
+    print(data)
+    context = {"data":data}
+    print(context)
+    return render(request, "index.html", context)
 
 
 
@@ -17,6 +24,6 @@ def insertData(request):
         age =  request.POST.get("age")
         gender = request.POST.get("gender")
         print(name, email, age, gender)
-
-
+        query = Student(name = name, email = email, age=age, gender = gender)
+        query.save()
     return render(request, "index.html")
