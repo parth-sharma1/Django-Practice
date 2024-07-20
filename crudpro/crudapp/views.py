@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Student
+from django.contrib import messages
 
 # admin-----> 1234
 
@@ -26,6 +27,7 @@ def updateData(request, id):
         edit.gender = gender
         edit.age = age
         edit.save()
+        messages.warning(request, "Data Updated Successfully")
         return redirect("/")
     
     d = Student.objects.get(id= id)
@@ -37,9 +39,11 @@ def updateData(request, id):
 
 
 def deleteData(request, id):
-    data = Student.objects.all()
-    context = {"data":data}
-    return render(request, "index.html", context)
+    d = Student.objects.get(id= id)
+    d.delete()
+    messages.error(request, "Data Deleted Successfully")
+    return redirect("/")
+
 
 
 
@@ -58,5 +62,6 @@ def insertData(request):
         print(name, email, age, gender)
         query = Student(name = name, email = email, age=age, gender = gender)
         query.save()
+        messages.info(request, "Data Inserted Successfully")
         return redirect("/")
     return render(request, "index.html")
